@@ -2,6 +2,7 @@
 #define BASIC_TIMER_H
 #include <chrono>
 #include <iostream>
+#include <ostream>
 
 namespace utils
 {

@@ -3,7 +3,9 @@
 #
 # @author Natesh Narain
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
+set(CMAKE_CXX_COMPILER clang++)
+
 
 project(aoc15)
 
@@ -13,7 +15,7 @@ find_package(Eigen3)
 
 # includes
 include_directories(
-  include/utils
+  include
 )
 
 set(DAY7_SOURCES src/day7.cpp)
