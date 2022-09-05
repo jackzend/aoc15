@@ -23,6 +23,18 @@ namespace utils
         return std::all_of(str.begin(), str.end(), [](const char e)
                            { return std::isdigit(e); });
     }
+
+    bool allAlpha(const std::string_view str)
+    {
+        return std::all_of(str.begin(), str.end(), [](const char e)
+                           { return std::isalpha(e); });
+    }
+
+    bool allDigits(const std::string_view str)
+    {
+        return std::all_of(str.begin(), str.end(), [](const char e)
+                           { return std::isdigit(e); });
+    }
     // helper type for the visitor #4
     template <class... Ts>
     struct overloaded : Ts...

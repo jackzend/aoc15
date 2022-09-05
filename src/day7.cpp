@@ -5,17 +5,27 @@ namespace day7
 
     void Day7::parse_input(const std::string &file_path)
     {
-        std::ifstream infile(file_path);
-
-        std::string temp;
-        while (getline(infile, temp))
+        std::error_code e;
+        const int fd = open(file_path.c_str(), O_RDONLY);
+        mio::mmap_source mmap(fd, 0, mio::map_entire_file);
+        if (e)
         {
-            auto tokens = utils::split(temp, ' ');
+            std::cout << "Error mapping file" << std::endl;
+            return;
+        }
+
+        std::string_view temp(mmap.begin(), mmap.size());
+
+        auto lines = utils::SVSplit(temp, '\n');
+
+        for (const auto temp : lines)
+        {
+            auto tokens = utils::SVSplit(temp, ' ');
             size_t sz = tokens.size();
             // this is an asignment
             if (sz == 3)
             {
-                std::string &name = tokens[2];
+                std::string name(tokens[2]);
 
                 if (!utils::mapContains(wire_map_, name))
                 {
@@ -24,7 +34,7 @@ namespace day7
                 wire_map_[name].lhs_ = std::monostate(); // no lhs
                 wire_map_[name].op_ = OP::NONE;          // no op
 
-                std::string &rhs = tokens[0];
+                std::string rhs(tokens[0]);
                 std::optional<uint16_t> rhs_i = std::nullopt;
                 if (utils::allDigits(rhs))
                 {
@@ -48,7 +58,7 @@ namespace day7
             // this is an unary op (only NOT)
             else if (sz == 4)
             {
-                std::string &name = tokens[3];
+                std::string name(tokens[3]);
 
                 // check if the name exists
                 if (!utils::mapContains(wire_map_, name))
@@ -59,7 +69,7 @@ namespace day7
                 wire_map_[name].op_ = OP::NOT;
 
                 // get the string to the right of the NOT
-                std::string &rhs = tokens[1];
+                std::string rhs(tokens[1]);
                 std::optional<uint16_t> rhs_i = std::nullopt;
                 if (utils::allDigits(rhs))
                 {
@@ -82,17 +92,17 @@ namespace day7
             // this is a binary op
             else if (sz == 5)
             {
-                std::string &name = tokens[4];
+                std::string name(tokens[4]);
 
                 // check if the name exists
                 if (!utils::mapContains(wire_map_, name))
                 {
                     wire_map_.insert_or_assign(name, Wire());
                 }
-                wire_map_[name].op_ = toOP.at(tokens[1]);
+                wire_map_[name].op_ = toOP.at(std::string(tokens[1]));
 
                 // get the string to the left of the OP
-                std::string &lhs = tokens[0];
+                std::string lhs(tokens[0]);
                 std::optional<uint16_t> lhs_i = std::nullopt;
                 if (utils::allDigits(lhs))
                 {
@@ -113,7 +123,7 @@ namespace day7
                 }
 
                 // get the string to the right of the OP
-                std::string &rhs = tokens[2];
+                std::string rhs(tokens[2]);
                 std::optional<uint16_t> rhs_i = std::nullopt;
                 if (utils::allDigits(rhs))
                 {
@@ -223,11 +233,12 @@ namespace day7
 
 int main(int argc, char *argv[])
 {
+    utils::MilliSecondTimer timer;
+
     day7::Day7 solution;
     solution.parse_input(std::string(argv[1]));
 
     // Runs the algorithm
-    utils::MilliSecondTimer timer;
     uint16_t p1 = solution.part1();
     uint16_t p2 = solution.part2(p1);
     float time_elapsed = timer.getElapsed();

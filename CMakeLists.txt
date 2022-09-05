@@ -27,3 +27,7 @@ add_executable(${PROJECT_NAME}_day7 ${DAY7_SOURCES})
 target_compile_options(${PROJECT_NAME}_day7 PUBLIC -std=c++17 -O3)
 target_link_libraries( ${PROJECT_NAME}_day7 PUBLIC mio::mio )
 
+add_executable(${PROJECT_NAME}_test_mio src/test_mio.cpp)
+target_compile_options(${PROJECT_NAME}_test_mio PUBLIC -std=c++17 -O3)
+target_link_libraries( ${PROJECT_NAME}_test_mio PUBLIC mio::mio )
+
