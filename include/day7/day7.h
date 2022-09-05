@@ -7,6 +7,7 @@
 #include <optional>
 #include <variant>
 #include <fstream>
+#include <mio/mmap.hpp>
 
 namespace day7
 {

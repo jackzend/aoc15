@@ -221,16 +221,16 @@ namespace day7
 
 } // namespace day7
 
-int main()
+int main(int argc, char *argv[])
 {
-    utils::MilliSecondTimer timer;
     day7::Day7 solution;
-    solution.parse_input("/Users/jackzender/aoc15/input/day7/day7.txt");
+    solution.parse_input(std::string(argv[1]));
 
+    // Runs the algorithm
+    utils::MilliSecondTimer timer;
     uint16_t p1 = solution.part1();
-    // std::cout << "Day 7 P1: " << p1 << " time elapsed: " << time_elapsed << "ms" << std::endl;
-
     uint16_t p2 = solution.part2(p1);
     float time_elapsed = timer.getElapsed();
-    std::cout << "Day 7 P1: " << p1 << " P2: " << p2 << "time elapsed : " << time_elapsed << "ms" << std::endl;
+
+    std::cout << "Day 7 P1: " << p1 << " P2: " << p2 << " time elapsed : " << time_elapsed << "ms" << std::endl;
 }
