@@ -1,19 +1,12 @@
-#include "day7/day7.h"
+#include "day7.h"
 using namespace std::chrono_literals;
 namespace day7
 {
 
     void Day7::parse_input(const std::string &file_path)
     {
-        std::error_code e;
         const int fd = open(file_path.c_str(), O_RDONLY);
         mio::mmap_source mmap(fd, 0, mio::map_entire_file);
-        if (e)
-        {
-            std::cout << "Error mapping file" << std::endl;
-            return;
-        }
-
         std::string_view temp(mmap.begin(), mmap.size());
 
         auto lines = utils::SVSplit(temp, '\n');

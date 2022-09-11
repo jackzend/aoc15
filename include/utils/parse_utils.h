@@ -4,9 +4,23 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <mio/mmap.hpp>
+#include <string_view>
+#include <memory>
 
 namespace utils
 {
+
+    std::unique_ptr<mio::mmap_source> getMmapFromFile(const std::string &fp)
+    {
+        const int fd = open(fp.c_str(), O_RDONLY);
+        return std::move(std::make_unique<mio::mmap_source>(fd, 0, mio::map_entire_file));
+    }
+
+    std::string_view getSVFromMmap(mio::mmap_source *mmap_ptr)
+    {
+        return std::string_view(mmap_ptr->begin(), mmap_ptr->size());
+    }
 
     void split(const std::string &s, char delim, std::vector<std::string> &elems)
     {

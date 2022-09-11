@@ -19,15 +19,14 @@ include_directories(
   include
 )
 
-set(DAY7_SOURCES src/day7.cpp)
 
 
-
-add_executable(${PROJECT_NAME}_day7 ${DAY7_SOURCES})
+add_executable(${PROJECT_NAME}_day7 src/day7.cpp)
 target_compile_options(${PROJECT_NAME}_day7 PUBLIC -std=c++17 -O3)
 target_link_libraries( ${PROJECT_NAME}_day7 PUBLIC mio::mio )
 
-add_executable(${PROJECT_NAME}_test_mio src/test_mio.cpp)
-target_compile_options(${PROJECT_NAME}_test_mio PUBLIC -std=c++17 -O3)
-target_link_libraries( ${PROJECT_NAME}_test_mio PUBLIC mio::mio )
+add_executable(${PROJECT_NAME}_day8 src/day8.cpp)
+target_compile_options(${PROJECT_NAME}_day8 PUBLIC -std=c++17 -O3)
+target_link_libraries( ${PROJECT_NAME}_day8 PUBLIC mio::mio )
+
 
